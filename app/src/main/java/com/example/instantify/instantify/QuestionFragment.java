@@ -29,7 +29,6 @@ public class QuestionFragment extends Fragment {
     String id;
     EditText interestingThing;
     TextView lectureQuestion;
-    int nmbKeys = 0;
     String deviceId = "";
     boolean alreadyAnswered = false;
 
@@ -71,34 +70,34 @@ public class QuestionFragment extends Fragment {
 
         Firebase.setAndroidContext(a.getApplicationContext());
 
-        Firebase questionRef = new Firebase("https://instantify.firebaseio.com/Lecture_ID_" + id + "/011");
+        Firebase questionRef = new Firebase("https://instantify.firebaseio.com/ID_" + id);
         Query queryRef = questionRef.orderByKey();
 
         queryRef.addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(DataSnapshot snapshot, String previousChildKey) {
-                System.out.println("Number" + snapshot.getChildrenCount() + " The " + snapshot.getKey() + " lecture tables is " + snapshot.getValue());
+                System.out.println("Key: " + snapshot.getKey() + " , value: " + snapshot.getValue());
 
-                nmbKeys++;
-
-                String txt = snapshot.getValue().toString();
-                if (snapshot.getKey().contentEquals("Question")) {
-                    lectureQuestion.setText(txt);
+                if (snapshot.getKey().contentEquals("active_question")) {
+                    lectureQuestion.setText(snapshot.getValue().toString());
                 }
 
-                if (snapshot.getValue().toString().contains(deviceId)) {
-                    alreadyAnswered = true;
+                if (snapshot.getKey().contentEquals("answers")) {
+                    if (snapshot.getValue().toString().contains(deviceId)) {
+                        alreadyAnswered = true;
+                    }
                 }
             }
 
             @Override
             public void onChildChanged(DataSnapshot dataSnapshot, String s) {
-
+                System.out.println("Key: " + dataSnapshot.getKey() + " , value: " + dataSnapshot.getValue());
+                lectureQuestion.setText(dataSnapshot.getValue().toString());
             }
 
             @Override
             public void onChildRemoved(DataSnapshot dataSnapshot) {
-
+                lectureQuestion.setText("No questions today!");
             }
 
             @Override
@@ -139,10 +138,10 @@ public class QuestionFragment extends Fragment {
     }
 
     private void submitAnswer() {
-        Firebase myFirebaseRef = new Firebase("https://instantify.firebaseio.com/");
+        Firebase myFirebaseRef = new Firebase("https://instantify.firebaseio.com");
 
-        Firebase questRef = myFirebaseRef.child("Lecture_ID_" + id).child("011").child("Answer" + String.valueOf(nmbKeys));
-        questRef.setValue(interestingThing.getText().toString() + " deviceId:" + deviceId, new Firebase.CompletionListener() {
+        Firebase answertRef = myFirebaseRef.child("/ID_" + id).child("answers").child(deviceId);
+        answertRef.setValue(interestingThing.getText().toString(), new Firebase.CompletionListener() {
             @Override
             public void onComplete(FirebaseError firebaseError, Firebase firebase) {
                 if (firebaseError != null) {
@@ -154,7 +153,6 @@ public class QuestionFragment extends Fragment {
             }
         });
 
-        nmbKeys = 0;
     }
 
     private void getPhoneId() {
