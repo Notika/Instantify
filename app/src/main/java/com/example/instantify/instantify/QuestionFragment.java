@@ -30,7 +30,8 @@ public class QuestionFragment extends Fragment {
     EditText interestingThing;
     TextView lectureQuestion;
     int nmbKeys = 0;
-    String deviceId ="";
+    String deviceId = "";
+    boolean alreadyAnswered = false;
 
     public QuestionFragment() {
     }
@@ -63,6 +64,8 @@ public class QuestionFragment extends Fragment {
         // Retain this fragment across configuration changes.
         setRetainInstance(true);
 
+        getPhoneId();
+
         // Get data from bundle
         id = getArguments().getString("id");
 
@@ -79,9 +82,12 @@ public class QuestionFragment extends Fragment {
                 nmbKeys++;
 
                 String txt = snapshot.getValue().toString();
-                if (snapshot.getKey().contentEquals("Question"))
-                {
+                if (snapshot.getKey().contentEquals("Question")) {
                     lectureQuestion.setText(txt);
+                }
+
+                if (snapshot.getValue().toString().contains(deviceId)) {
+                    alreadyAnswered = true;
                 }
             }
 
@@ -106,17 +112,6 @@ public class QuestionFragment extends Fragment {
             }
 
         });
-
-        final TelephonyManager tm = (TelephonyManager) a.getBaseContext().getSystemService(Context.TELEPHONY_SERVICE);
-
-        final String tmDevice, tmSerial, androidId;
-        tmDevice = "" + tm.getDeviceId();
-        tmSerial = "" + tm.getSimSerialNumber();
-        androidId = "" + android.provider.Settings.Secure.getString(a.getContentResolver(), android.provider.Settings.Secure.ANDROID_ID);
-
-        UUID deviceUuid = new UUID(androidId.hashCode(), ((long)tmDevice.hashCode() << 32) | tmSerial.hashCode());
-        deviceId = deviceUuid.toString();
-
     }
 
     @Override
@@ -132,22 +127,22 @@ public class QuestionFragment extends Fragment {
         submitB.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-                submitAnswer();
-
+                if (alreadyAnswered){
+                    confirmListener.eventShowConfirmation("-255");
+                } else {
+                    submitAnswer();
+                }
             }
         });
 
         return view;
     }
 
-    private void submitAnswer(){
-        String[] separated = deviceId.split("-");
-
+    private void submitAnswer() {
         Firebase myFirebaseRef = new Firebase("https://instantify.firebaseio.com/");
 
-        Firebase questRef = myFirebaseRef.child("Lecture_ID_"+ id).child("011").child("Answer"+ String.valueOf(nmbKeys));
-        questRef.setValue(interestingThing.getText().toString() + " deviceId:" + separated[4], new Firebase.CompletionListener() {
+        Firebase questRef = myFirebaseRef.child("Lecture_ID_" + id).child("011").child("Answer" + String.valueOf(nmbKeys));
+        questRef.setValue(interestingThing.getText().toString() + " deviceId:" + deviceId, new Firebase.CompletionListener() {
             @Override
             public void onComplete(FirebaseError firebaseError, Firebase firebase) {
                 if (firebaseError != null) {
@@ -162,8 +157,21 @@ public class QuestionFragment extends Fragment {
         nmbKeys = 0;
     }
 
+    private void getPhoneId() {
+        final TelephonyManager tm = (TelephonyManager) a.getBaseContext().getSystemService(Context.TELEPHONY_SERVICE);
+
+        final String tmDevice, tmSerial, androidId;
+        tmDevice = "" + tm.getDeviceId();
+        tmSerial = "" + tm.getSimSerialNumber();
+        androidId = "" + android.provider.Settings.Secure.getString(a.getContentResolver(), android.provider.Settings.Secure.ANDROID_ID);
+
+        UUID deviceUuid = new UUID(androidId.hashCode(), ((long) tmDevice.hashCode() << 32) | tmSerial.hashCode());
+        String[] separated = deviceUuid.toString().split("-");
+        deviceId = separated[4];
+    }
+
     @Override
-    public void onDestroy(){
+    public void onDestroy() {
         super.onDestroy();
         confirmListener = null;
     }
