@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent" android:layout_height="match_parent">
+    android:layout_width="match_parent" android:layout_height="match_parent"
+    android:padding="30dp">
 
     <TextView
         android:layout_width="wrap_content"
@@ -8,24 +9,35 @@
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:text="Lecture ID"
         android:id="@+id/textView"
+        android:layout_marginTop="40dp"
+        android:textSize="30dp"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="73dp" />
+        android:textColor="#eeeeee" />
 
     <EditText
-        android:layout_width="match_parent"
+        android:layout_width="250dp"
         android:layout_height="wrap_content"
         android:id="@+id/editText"
-        android:hint="Type something like 01, 02 or 03"
-        android:layout_centerVertical="true"
+        android:hint="Type Lecture ID..."
+        android:inputType="text"
+        android:layout_below="@+id/textView"
         android:layout_centerHorizontal="true"
-        android:inputType="numberDecimal" />
+        android:layout_marginTop="42dp"
+        android:textColor="#FFEEEEEE"
+        android:textColorHint="#cccccc"
+        android:backgroundTint="#FFEEEEEE"
+        android:clickable="true"
+        android:textSize="20dp" />
 
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="LOG IN"
         android:id="@+id/button"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true" />
+        android:padding="25dp"
+        android:nestedScrollingEnabled="true"
+        android:layout_below="@+id/editText"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="58dp" />
 </RelativeLayout>

@@ -3,4 +3,6 @@
     android:id="@+id/container"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_gravity="center"></FrameLayout>
+    android:layout_gravity="center"
+    android:padding="6dp"
+    android:background="#4cb897"></FrameLayout>
