@@ -20,6 +20,7 @@ public class LoginFragment extends Fragment {
     public LoginFragment() {
     }
 
+    // Container Activity must implement this interface
     public interface onShowQuestionListener {
         void eventShowQuestion(String elementId);
     }
@@ -30,16 +31,21 @@ public class LoginFragment extends Fragment {
     public void onAttach(Context context) {
         super.onAttach(context);
         try {
+            /** On success, the questionViewEventListener member holds a reference
+             *  to activity's implementation of onShowQuestionListener,
+             *  so that LoginFragment can share events with the activity by calling methods
+             *  defined by the onShowQuestionListener interface.
+             */
             a = (Activity) context;
             questionViewEventListener = (onShowQuestionListener) a;
         } catch (ClassCastException e) {
-            throw new ClassCastException(a.toString() + " must implement LoginFragment");
+            // If the activity has not implemented the interface - the fragment throws a ClassCastException.
+            throw new ClassCastException(a.toString() + " must implement onShowQuestionListener");
         }
     }
 
     /**
-     * This method will only be called once when the retained
-     * Fragment is first created.
+     * This method will only be called once when the retained Fragment is first created.
      */
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -47,8 +53,6 @@ public class LoginFragment extends Fragment {
 
         // Retain this fragment across configuration changes.
         setRetainInstance(true);
-
-
     }
 
     @Override
@@ -61,7 +65,7 @@ public class LoginFragment extends Fragment {
         login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                // Send event with Lection ID
                 questionViewEventListener.eventShowQuestion(lectureId.getText().toString());
             }
         });
@@ -69,8 +73,8 @@ public class LoginFragment extends Fragment {
     }
 
     @Override
-    public void onDestroy(){
+    public void onDestroy() {
         super.onDestroy();
         questionViewEventListener = null;
-        }
+    }
 }

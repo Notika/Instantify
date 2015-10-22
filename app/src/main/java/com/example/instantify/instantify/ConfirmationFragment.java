@@ -8,7 +8,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.TextView;
 
 /**
@@ -27,7 +26,6 @@ public class ConfirmationFragment extends Fragment {
         super.onAttach(context);
         try {
             a = (Activity) context;
-
         } catch (ClassCastException e) {
             throw new ClassCastException(a.toString() + " must implement LoginFragment");
         }
@@ -49,14 +47,16 @@ public class ConfirmationFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.confirmation_fragment, container, false);
 
+        // Show some text info and Lecture ID for future use
         TextView lectureId = (TextView) view.findViewById(R.id.textView1);
         lectureId.setText("LECTURE ID: " + getArguments().getString("id"));
-        Button logout = (Button) view.findViewById(R.id.logoutB);
 
+        // Get a reference to Logout button and create onClock listener
+        Button logout = (Button) view.findViewById(R.id.logoutB);
         logout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                // Finish activity and close an application.
                 a.finish();
             }
         });

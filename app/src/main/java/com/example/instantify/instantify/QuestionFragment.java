@@ -48,7 +48,7 @@ public class QuestionFragment extends Fragment {
             a = (Activity) context;
             confirmListener = (onShowConfirmListener) a;
         } catch (ClassCastException e) {
-            throw new ClassCastException(a.toString() + " must implement QuestionFragment");
+            throw new ClassCastException(a.toString() + " must implement onShowConfirmListener");
         }
     }
 
@@ -63,16 +63,21 @@ public class QuestionFragment extends Fragment {
         // Retain this fragment across configuration changes.
         setRetainInstance(true);
 
+        // Get unique phone ID
         getPhoneId();
 
         // Get data from bundle
         id = getArguments().getString("id");
 
+        /** The Firebase library must be initialized once with an Android context.
+         *  This must happen before any Firebase app reference is created or used. */
         Firebase.setAndroidContext(a.getApplicationContext());
 
+        // // Get a reference to our Lecture IDs
         Firebase questionRef = new Firebase("https://instantify.firebaseio.com/ID_" + id);
         Query queryRef = questionRef.orderByKey();
 
+        // Attach an listener to read the data at our IDs reference
         queryRef.addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(DataSnapshot snapshot, String previousChildKey) {
@@ -89,6 +94,7 @@ public class QuestionFragment extends Fragment {
                 }
             }
 
+            // Get the data on a record that has changed
             @Override
             public void onChildChanged(DataSnapshot dataSnapshot, String s) {
                 System.out.println("Key: " + dataSnapshot.getKey() + " , value: " + dataSnapshot.getValue());
@@ -126,7 +132,7 @@ public class QuestionFragment extends Fragment {
         submitB.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (alreadyAnswered){
+                if (alreadyAnswered) {
                     confirmListener.eventShowConfirmation("-255");
                 } else {
                     submitAnswer();
@@ -156,14 +162,16 @@ public class QuestionFragment extends Fragment {
     }
 
     private void getPhoneId() {
-        final TelephonyManager tm = (TelephonyManager) a.getBaseContext().getSystemService(Context.TELEPHONY_SERVICE);
 
+        final TelephonyManager tm = (TelephonyManager) a.getBaseContext().getSystemService(Context.TELEPHONY_SERVICE);
         final String tmDevice, tmSerial, androidId;
+
         tmDevice = "" + tm.getDeviceId();
         tmSerial = "" + tm.getSimSerialNumber();
         androidId = "" + android.provider.Settings.Secure.getString(a.getContentResolver(), android.provider.Settings.Secure.ANDROID_ID);
 
         UUID deviceUuid = new UUID(androidId.hashCode(), ((long) tmDevice.hashCode() << 32) | tmSerial.hashCode());
+        // Phone ID is 64 symbols long. Take only a last part of it.
         String[] separated = deviceUuid.toString().split("-");
         deviceId = separated[4];
     }
@@ -173,5 +181,4 @@ public class QuestionFragment extends Fragment {
         super.onDestroy();
         confirmListener = null;
     }
-
 }
