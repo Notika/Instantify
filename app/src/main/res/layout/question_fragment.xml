@@ -33,7 +33,10 @@
             android:layout_marginTop="40dp"
             android:textColor="#FFEEEEEE"
             android:textColorHint="#cccccc"
-            android:backgroundTint="#FFEEEEEE" />
+            android:backgroundTint="#FFEEEEEE"
+            android:lines="1"
+            android:maxLines="1"
+            android:maxLength="15" />
     </LinearLayout>
 
     <LinearLayout

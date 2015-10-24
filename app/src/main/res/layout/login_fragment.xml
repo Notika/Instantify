@@ -28,7 +28,11 @@
         android:textColorHint="#cccccc"
         android:backgroundTint="#FFEEEEEE"
         android:clickable="true"
-        android:textSize="20dp" />
+        android:textSize="20dp"
+        android:singleLine="true"
+        android:lines="1"
+        android:maxLines="1"
+        android:maxLength="7" />
 
     <Button
         android:layout_width="wrap_content"
