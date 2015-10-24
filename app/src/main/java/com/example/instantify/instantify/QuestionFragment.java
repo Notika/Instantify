@@ -2,9 +2,9 @@ package com.example.instantify.instantify;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.res.Resources;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
 import android.telephony.TelephonyManager;
 import android.text.InputFilter;
 import android.text.Spanned;
@@ -141,6 +141,25 @@ public class QuestionFragment extends Fragment {
             }
         };
         interestingThing.setFilters(new InputFilter[] { filter });
+        interestingThing.addTextChangedListener(new TextValidator(interestingThing) {
+            @Override
+            public void validate(TextView textView, String text) {
+                /* Validation code here */
+                if (text.length() > 2){
+                    Resources res = a.getResources();
+                    String[] cleanWords = res.getStringArray(R.array.wordExceptions); //call the index array
+
+                    for (int i = 0; i < cleanWords.length; i++)
+                    {
+                        if (text.toLowerCase().contains(cleanWords[i]))
+                        {
+                            textView.setText("");
+                            break;
+                        }
+                    }
+                }
+            }
+        });
 
         Button backB = (Button) view.findViewById(R.id.button2);
         backB.setOnClickListener(new View.OnClickListener() {
