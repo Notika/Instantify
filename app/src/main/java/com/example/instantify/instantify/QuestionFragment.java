@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.telephony.TelephonyManager;
 import android.text.InputFilter;
 import android.text.Spanned;
@@ -21,7 +22,6 @@ import com.firebase.client.FirebaseError;
 import com.firebase.client.Query;
 
 import java.util.UUID;
-
 
 public class QuestionFragment extends Fragment {
 
@@ -142,6 +142,15 @@ public class QuestionFragment extends Fragment {
         };
         interestingThing.setFilters(new InputFilter[] { filter });
 
+        Button backB = (Button) view.findViewById(R.id.button2);
+        backB.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Pop the last fragment transition from the manager's fragment
+                // back stack and return to previous page.
+                getFragmentManager().popBackStackImmediate();
+            }
+        });
 
         Button submitB = (Button) view.findViewById(R.id.button3);
         submitB.setOnClickListener(new View.OnClickListener() {
