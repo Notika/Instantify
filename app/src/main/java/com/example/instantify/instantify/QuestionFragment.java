@@ -5,6 +5,8 @@ import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.telephony.TelephonyManager;
+import android.text.InputFilter;
+import android.text.Spanned;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,9 +22,7 @@ import com.firebase.client.Query;
 
 import java.util.UUID;
 
-/**
- * Created by Nataly on 2015-10-17.
- */
+
 public class QuestionFragment extends Fragment {
 
     Activity a;
@@ -127,6 +127,21 @@ public class QuestionFragment extends Fragment {
 
         interestingThing = (EditText) view.findViewById(R.id.editText2);
         lectureQuestion = (TextView) view.findViewById(R.id.textView3);
+
+        // Set filter for restriction input text chars to 0-9, a-z, A-Z and spacebar only.
+        InputFilter filter = new InputFilter() {
+            public CharSequence filter(CharSequence source, int start, int end,
+                                       Spanned dest, int dstart, int dend) {
+                for (int i = start; i < end; i++) {
+                    if (!Character.isLetterOrDigit(source.charAt(i))) {
+                        return "";
+                    }
+                }
+                return null;
+            }
+        };
+        interestingThing.setFilters(new InputFilter[] { filter });
+
 
         Button submitB = (Button) view.findViewById(R.id.button3);
         submitB.setOnClickListener(new View.OnClickListener() {
