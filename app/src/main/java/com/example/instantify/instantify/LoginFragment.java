@@ -2,7 +2,6 @@ package com.example.instantify.instantify;
 
 import android.app.Activity;
 import android.content.Context;
-import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -10,7 +9,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.Toast;
 
 import com.firebase.client.ChildEventListener;
 import com.firebase.client.DataSnapshot;
@@ -25,7 +23,6 @@ import com.firebase.client.ValueEventListener;
 public class LoginFragment extends Fragment {
     Activity a;
     EditText lectureId;
-    MediaPlayer mediaPlayer;
 
     public LoginFragment() {
     }

@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.res.Resources;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.telephony.TelephonyManager;
 import android.text.InputFilter;
 import android.text.Spanned;
 import android.view.LayoutInflater;
@@ -13,7 +14,6 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.firebase.client.ChildEventListener;
 import com.firebase.client.DataSnapshot;
@@ -21,12 +21,16 @@ import com.firebase.client.Firebase;
 import com.firebase.client.FirebaseError;
 import com.firebase.client.Query;
 
+import java.util.UUID;
+
 public class QuestionFragment extends Fragment {
 
     Activity a;
     String id;
     EditText interestingThing;
     TextView lectureQuestion;
+    String deviceId = "";
+    boolean alreadyAnswered = false;
 
     public QuestionFragment() {
     }
@@ -141,8 +145,10 @@ public class QuestionFragment extends Fragment {
                     Resources res = a.getResources();
                     String[] cleanWords = res.getStringArray(R.array.wordExceptions); //call the index array
 
-                    for (int i = 0; i < cleanWords.length; i++) {
-                        if (text.toLowerCase().contains(cleanWords[i])) {
+                    for (int i = 0; i < cleanWords.length; i++)
+                    {
+                        if (text.toLowerCase().contains(cleanWords[i]))
+                        {
                             textView.setText("");
                             break;
                         }
@@ -165,7 +171,11 @@ public class QuestionFragment extends Fragment {
         submitB.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                submitAnswer();
+                if (alreadyAnswered) {
+                    confirmListener.eventShowConfirmation("-255");
+                } else {
+                    submitAnswer();
+                }
             }
         });
 
