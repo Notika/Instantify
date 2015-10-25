@@ -2,6 +2,7 @@ package com.example.instantify.instantify;
 
 import android.app.Activity;
 import android.content.Context;
+import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -9,6 +10,14 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
+
+import com.firebase.client.ChildEventListener;
+import com.firebase.client.DataSnapshot;
+import com.firebase.client.Firebase;
+import com.firebase.client.FirebaseError;
+import com.firebase.client.Query;
+import com.firebase.client.ValueEventListener;
 
 /**
  * Created by Nataly on 2015-10-17.
@@ -16,6 +25,7 @@ import android.widget.EditText;
 public class LoginFragment extends Fragment {
     Activity a;
     EditText lectureId;
+    MediaPlayer mediaPlayer;
 
     public LoginFragment() {
     }
@@ -65,8 +75,9 @@ public class LoginFragment extends Fragment {
         login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 // Send event with Lection ID
-                questionViewEventListener.eventShowQuestion(lectureId.getText().toString());
+                getLectureQuestion(lectureId.getText().toString());
             }
         });
         return view;
@@ -76,5 +87,52 @@ public class LoginFragment extends Fragment {
     public void onDestroy() {
         super.onDestroy();
         questionViewEventListener = null;
+        if (mediaPlayer != null) {
+            mediaPlayer.release();
+            mediaPlayer = null;
+        }
+    }
+
+
+    private void getLectureQuestion(String questionID) {
+
+        /** The Firebase library must be initialized once with an Android context.
+         *  This must happen before any Firebase app reference is created or used. */
+        Firebase.setAndroidContext(a.getApplicationContext());
+
+        Firebase questionRef = new Firebase("https://instantify.firebaseio.com/ID_" + questionID);
+        Query queryRef = questionRef.orderByKey();
+
+        queryRef.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot snapshot) {
+                System.out.println("Key: " + snapshot.getKey() + " , value: " + snapshot.getValue());
+                try {
+                    if (snapshot.hasChild("active_question")) {
+                        questionViewEventListener.eventShowQuestion(lectureId.getText().toString());
+                    } else {
+                        // No such lection ID
+                        Toast toast = Toast.makeText(a.getApplicationContext(),
+                                "Sorry! The ID you have entered is not valid! Please try another Lecture ID",
+                                Toast.LENGTH_LONG);
+                        toast.show();
+                        // Play music
+                        mediaPlayer = MediaPlayer.create(a.getApplicationContext(), R.raw.error);
+                        mediaPlayer.start();
+                    }
+                } catch (NullPointerException e) {
+
+                    // No such lection ID
+                    Toast toast = Toast.makeText(a.getApplicationContext(),
+                            "Sorry! The ID you have entered is not valid! Please try another Lecture ID",
+                            Toast.LENGTH_LONG);
+                    toast.show();
+                }
+            }
+
+            @Override
+            public void onCancelled(FirebaseError firebaseError) {
+            }
+        });
     }
 }

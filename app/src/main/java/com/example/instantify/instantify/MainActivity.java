@@ -1,15 +1,20 @@
 package com.example.instantify.instantify;
 
+import android.content.Context;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.widget.Toast;
+import android.telephony.TelephonyManager;
 
 import com.example.instantify.instantify.LoginFragment.onShowQuestionListener;
 import com.example.instantify.instantify.QuestionFragment.onShowConfirmListener;
 
+import java.util.UUID;
+
 public class MainActivity extends AppCompatActivity implements
         onShowQuestionListener,
         onShowConfirmListener {
+
+    static String deviceId = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -24,6 +29,24 @@ public class MainActivity extends AppCompatActivity implements
                     .add(R.id.container, loginF)
                     .commit();
         }
+
+        // Get unique phone ID
+        deviceId = getUniquePhoneId();
+    }
+
+    public String getUniquePhoneId() {
+
+        final TelephonyManager tm = (TelephonyManager) getSystemService(Context.TELEPHONY_SERVICE);
+        final String tmDevice, tmSerial, androidId;
+
+        tmDevice = "" + tm.getDeviceId();
+        tmSerial = "" + tm.getSimSerialNumber();
+        androidId = "" + android.provider.Settings.Secure.getString(getContentResolver(), android.provider.Settings.Secure.ANDROID_ID);
+
+        UUID deviceUuid = new UUID(androidId.hashCode(), ((long) tmDevice.hashCode() << 32) | tmSerial.hashCode());
+        // Phone ID is 64 symbols long. Take only a last part of it.
+        String[] separated = deviceUuid.toString().split("-");
+        return separated[4];
     }
 
     @Override
@@ -54,24 +77,16 @@ public class MainActivity extends AppCompatActivity implements
     public void eventShowConfirmation(String elementId) {
         /** This is an implementation of  QuestionFragment callback interface.
          */
-        if (elementId.contentEquals("-255")) {
-            Toast toast = Toast.makeText(getApplicationContext(),
-                    "Sorry! You've answered on this question already! Please go back and try another Lecture ID",
-                    Toast.LENGTH_LONG);
-            toast.show();
-        } else {
-            Bundle args = new Bundle();
-            // Create new fragment and transaction
-            ConfirmationFragment confirmF = new ConfirmationFragment();
-            // Supply LECTURE ID input as an argument.
-            args.putString("id", elementId);
+        Bundle args = new Bundle();
+        // Create new fragment and transaction
+        ConfirmationFragment confirmF = new ConfirmationFragment();
+        // Supply LECTURE ID input as an argument.
+        args.putString("id", elementId);
 
-            confirmF.setArguments(args);
-            getSupportFragmentManager().beginTransaction()
-                    .replace(R.id.container, confirmF)
-                    .addToBackStack(null)
-                    .commit();
-        }
+        confirmF.setArguments(args);
+        getSupportFragmentManager().beginTransaction()
+                .replace(R.id.container, confirmF)
+                .addToBackStack(null)
+                .commit();
     }
-
 }

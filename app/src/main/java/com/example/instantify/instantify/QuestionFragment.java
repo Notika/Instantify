@@ -5,7 +5,6 @@ import android.content.Context;
 import android.content.res.Resources;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.telephony.TelephonyManager;
 import android.text.InputFilter;
 import android.text.Spanned;
 import android.view.LayoutInflater;
@@ -14,6 +13,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.firebase.client.ChildEventListener;
 import com.firebase.client.DataSnapshot;
@@ -21,16 +21,12 @@ import com.firebase.client.Firebase;
 import com.firebase.client.FirebaseError;
 import com.firebase.client.Query;
 
-import java.util.UUID;
-
 public class QuestionFragment extends Fragment {
 
     Activity a;
     String id;
     EditText interestingThing;
     TextView lectureQuestion;
-    String deviceId = "";
-    boolean alreadyAnswered = false;
 
     public QuestionFragment() {
     }
@@ -63,16 +59,8 @@ public class QuestionFragment extends Fragment {
         // Retain this fragment across configuration changes.
         setRetainInstance(true);
 
-        // Get unique phone ID
-        getPhoneId();
-
         // Get data from bundle
         id = getArguments().getString("id");
-
-        /** The Firebase library must be initialized once with an Android context.
-         *  This must happen before any Firebase app reference is created or used. */
-        Firebase.setAndroidContext(a.getApplicationContext());
-
         // // Get a reference to our Lecture IDs
         Firebase questionRef = new Firebase("https://instantify.firebaseio.com/ID_" + id);
         Query queryRef = questionRef.orderByKey();
@@ -88,8 +76,11 @@ public class QuestionFragment extends Fragment {
                 }
 
                 if (snapshot.getKey().contentEquals("answers")) {
-                    if (snapshot.getValue().toString().contains(deviceId)) {
-                        alreadyAnswered = true;
+                    if (snapshot.getValue().toString().contains(MainActivity.deviceId)) {
+                        Toast toast = Toast.makeText(a.getApplicationContext(),
+                                "Sorry! You've answered on this question already! Please try another Lecture ID",
+                                Toast.LENGTH_LONG);
+                        toast.show();
                     }
                 }
             }
@@ -117,6 +108,7 @@ public class QuestionFragment extends Fragment {
             }
 
         });
+
     }
 
     @Override
@@ -140,19 +132,17 @@ public class QuestionFragment extends Fragment {
                 return null;
             }
         };
-        interestingThing.setFilters(new InputFilter[] { filter });
+        interestingThing.setFilters(new InputFilter[]{filter});
         interestingThing.addTextChangedListener(new TextValidator(interestingThing) {
             @Override
             public void validate(TextView textView, String text) {
                 /* Validation code here */
-                if (text.length() > 2){
+                if (text.length() > 2) {
                     Resources res = a.getResources();
                     String[] cleanWords = res.getStringArray(R.array.wordExceptions); //call the index array
 
-                    for (int i = 0; i < cleanWords.length; i++)
-                    {
-                        if (text.toLowerCase().contains(cleanWords[i]))
-                        {
+                    for (int i = 0; i < cleanWords.length; i++) {
+                        if (text.toLowerCase().contains(cleanWords[i])) {
                             textView.setText("");
                             break;
                         }
@@ -175,11 +165,7 @@ public class QuestionFragment extends Fragment {
         submitB.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (alreadyAnswered) {
-                    confirmListener.eventShowConfirmation("-255");
-                } else {
-                    submitAnswer();
-                }
+                submitAnswer();
             }
         });
 
@@ -189,7 +175,7 @@ public class QuestionFragment extends Fragment {
     private void submitAnswer() {
         Firebase myFirebaseRef = new Firebase("https://instantify.firebaseio.com");
 
-        Firebase answertRef = myFirebaseRef.child("/ID_" + id).child("answers").child(deviceId);
+        Firebase answertRef = myFirebaseRef.child("/ID_" + id).child("answers").child(MainActivity.deviceId);
         answertRef.setValue(interestingThing.getText().toString(), new Firebase.CompletionListener() {
             @Override
             public void onComplete(FirebaseError firebaseError, Firebase firebase) {
@@ -202,21 +188,6 @@ public class QuestionFragment extends Fragment {
             }
         });
 
-    }
-
-    private void getPhoneId() {
-
-        final TelephonyManager tm = (TelephonyManager) a.getBaseContext().getSystemService(Context.TELEPHONY_SERVICE);
-        final String tmDevice, tmSerial, androidId;
-
-        tmDevice = "" + tm.getDeviceId();
-        tmSerial = "" + tm.getSimSerialNumber();
-        androidId = "" + android.provider.Settings.Secure.getString(a.getContentResolver(), android.provider.Settings.Secure.ANDROID_ID);
-
-        UUID deviceUuid = new UUID(androidId.hashCode(), ((long) tmDevice.hashCode() << 32) | tmSerial.hashCode());
-        // Phone ID is 64 symbols long. Take only a last part of it.
-        String[] separated = deviceUuid.toString().split("-");
-        deviceId = separated[4];
     }
 
     @Override
