@@ -2,12 +2,12 @@ package com.example.instantify.instantify;
 
 import android.app.Activity;
 import android.content.Context;
-import android.content.res.Resources;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.telephony.TelephonyManager;
 import android.text.InputFilter;
 import android.text.Spanned;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -74,14 +74,14 @@ public class QuestionFragment extends Fragment {
         Firebase.setAndroidContext(a.getApplicationContext());
 
         // // Get a reference to our Lecture IDs
-        Firebase questionRef = new Firebase("https://instantify.firebaseio.com/ID_" + id);
+        Firebase questionRef = new Firebase("https://instantify.firebaseio.com/" + id);
         Query queryRef = questionRef.orderByKey();
 
         // Attach an listener to read the data at our IDs reference
         queryRef.addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(DataSnapshot snapshot, String previousChildKey) {
-                System.out.println("Key: " + snapshot.getKey() + " , value: " + snapshot.getValue());
+                Log.d("DBINFO", "Key: " + snapshot.getKey() + " , value: " + snapshot.getValue());
 
                 if (snapshot.getKey().contentEquals("active_question")) {
                     lectureQuestion.setText(snapshot.getValue().toString());
@@ -97,7 +97,7 @@ public class QuestionFragment extends Fragment {
             // Get the data on a record that has changed
             @Override
             public void onChildChanged(DataSnapshot dataSnapshot, String s) {
-                System.out.println("Key: " + dataSnapshot.getKey() + " , value: " + dataSnapshot.getValue());
+                Log.d("DBINFO", "Key: " + dataSnapshot.getKey() + " , value: " + dataSnapshot.getValue());
                 lectureQuestion.setText(dataSnapshot.getValue().toString());
             }
 
@@ -113,7 +113,7 @@ public class QuestionFragment extends Fragment {
 
             @Override
             public void onCancelled(FirebaseError firebaseError) {
-                System.out.println("The read failed: " + firebaseError.getMessage());
+                Log.d("DBINFO", "The read failed: " + firebaseError.getMessage());
             }
 
         });
@@ -140,11 +140,14 @@ public class QuestionFragment extends Fragment {
                 return null;
             }
         };
+
+        /**
         interestingThing.setFilters(new InputFilter[] { filter });
         interestingThing.addTextChangedListener(new TextValidator(interestingThing) {
+
             @Override
             public void validate(TextView textView, String text) {
-                /* Validation code here */
+                //Validation code here
                 if (text.length() > 2){
                     Resources res = a.getResources();
                     String[] cleanWords = res.getStringArray(R.array.wordExceptions); //call the index array
@@ -160,6 +163,7 @@ public class QuestionFragment extends Fragment {
                 }
             }
         });
+         */
 
         Button backB = (Button) view.findViewById(R.id.button2);
         backB.setOnClickListener(new View.OnClickListener() {
@@ -189,7 +193,7 @@ public class QuestionFragment extends Fragment {
     private void submitAnswer() {
         Firebase myFirebaseRef = new Firebase("https://instantify.firebaseio.com");
 
-        Firebase answertRef = myFirebaseRef.child("/ID_" + id).child("answers").child(deviceId);
+        Firebase answertRef = myFirebaseRef.child(id).child("answers").child(deviceId);
         answertRef.setValue(interestingThing.getText().toString(), new Firebase.CompletionListener() {
             @Override
             public void onComplete(FirebaseError firebaseError, Firebase firebase) {
@@ -201,10 +205,9 @@ public class QuestionFragment extends Fragment {
                 }
             }
         });
-
     }
 
-    private void getPhoneId() {
+private void getPhoneId() {
 
         final TelephonyManager tm = (TelephonyManager) a.getBaseContext().getSystemService(Context.TELEPHONY_SERVICE);
         final String tmDevice, tmSerial, androidId;

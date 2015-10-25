@@ -9,6 +9,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
+
+import com.firebase.client.DataSnapshot;
+import com.firebase.client.Firebase;
+import com.firebase.client.FirebaseError;
+import com.firebase.client.ValueEventListener;
 
 /**
  * Created by Nataly on 2015-10-17.
@@ -50,7 +56,7 @@ public class LoginFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
+        Firebase.setAndroidContext(a);
         // Retain this fragment across configuration changes.
         setRetainInstance(true);
     }
@@ -65,8 +71,29 @@ public class LoginFragment extends Fragment {
         login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Firebase ref = new Firebase("https://instantify.firebaseio.com/"+lectureId.getText().toString());
+                ref.addListenerForSingleValueEvent(new  ValueEventListener(){
+
+                    //Lecture ID validation
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+                        if(dataSnapshot.getValue()!= null) {
+                            // Send event with Lection ID
+                            questionViewEventListener.eventShowQuestion(lectureId.getText().toString());
+                        }
+                        else {
+                            //If ID does not exist in database, respnd with a toaster message.
+                            Toast.makeText(a, "Incorrect Lecture ID",
+                                    Toast.LENGTH_LONG).show();
+                        }
+                    }
+
+                    @Override
+                    public void onCancelled(FirebaseError firebaseError) {
+
+                    }
+                });
                 // Send event with Lection ID
-                questionViewEventListener.eventShowQuestion(lectureId.getText().toString());
             }
         });
         return view;
