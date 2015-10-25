@@ -7,6 +7,11 @@ import android.telephony.TelephonyManager;
 
 import com.example.instantify.instantify.LoginFragment.onShowQuestionListener;
 import com.example.instantify.instantify.QuestionFragment.onShowConfirmListener;
+import com.firebase.client.ChildEventListener;
+import com.firebase.client.DataSnapshot;
+import com.firebase.client.Firebase;
+import com.firebase.client.FirebaseError;
+import com.firebase.client.Query;
 
 import java.util.UUID;
 
@@ -15,6 +20,7 @@ public class MainActivity extends AppCompatActivity implements
         onShowConfirmListener {
 
     static String deviceId = "";
+    static String lectureId = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,6 +68,7 @@ public class MainActivity extends AppCompatActivity implements
 
         // Get Lecture ID from user...
         args.putString("id", elementId);
+        lectureId = elementId;
 
         //...and pass parameters to a second fragment - question page.
         questionF.setArguments(args);
@@ -88,5 +95,40 @@ public class MainActivity extends AppCompatActivity implements
                 .replace(R.id.container, confirmF)
                 .addToBackStack(null)
                 .commit();
+
+        // Get a reference to our Lecture IDs
+        Firebase questionRef = new Firebase("https://instantify.firebaseio.com/ID_" + elementId);
+        Query queryRef = questionRef.orderByKey();
+
+        // Attach an listener to read the data at our IDs reference
+        queryRef.addChildEventListener(new ChildEventListener() {
+            @Override
+            public void onChildAdded(DataSnapshot snapshot, String previousChildKey) {
+                System.out.println("Key1: " + snapshot.getKey() + " , value: " + snapshot.getValue());
+            }
+
+            // Get the data on a record that has changed
+            @Override
+            public void onChildChanged(DataSnapshot dataSnapshot, String s) {
+                System.out.println("Key2: " + dataSnapshot.getKey() + " , value: " + dataSnapshot.getValue());
+                // Pop the last fragment transition from the manager's fragment
+                // back stack and return to previous page.
+                getSupportFragmentManager().popBackStackImmediate();
+            }
+
+            @Override
+            public void onChildRemoved(DataSnapshot dataSnapshot) {
+            }
+
+            @Override
+            public void onChildMoved(DataSnapshot dataSnapshot, String s) {
+            }
+
+            @Override
+            public void onCancelled(FirebaseError firebaseError) {
+                System.out.println("The read failed: " + firebaseError.getMessage());
+            }
+
+        });
     }
 }

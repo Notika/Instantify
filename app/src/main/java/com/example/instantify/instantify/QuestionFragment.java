@@ -5,12 +5,12 @@ import android.content.Context;
 import android.content.res.Resources;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.telephony.TelephonyManager;
 import android.text.InputFilter;
 import android.text.Spanned;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -22,16 +22,15 @@ import com.firebase.client.Firebase;
 import com.firebase.client.FirebaseError;
 import com.firebase.client.Query;
 
-import java.util.UUID;
-
 public class QuestionFragment extends Fragment {
 
     Activity a;
-    String id;
+    Firebase questionRef = null;
+    static String id;
     EditText interestingThing;
     TextView lectureQuestion;
-    String deviceId = "";
     boolean alreadyAnswered = false;
+    ChildEventListener listener;
 
     public QuestionFragment() {
     }
@@ -63,56 +62,6 @@ public class QuestionFragment extends Fragment {
 
         // Retain this fragment across configuration changes.
         setRetainInstance(true);
-
-        // Get data from bundle
-        id = getArguments().getString("id");
-        // // Get a reference to our Lecture IDs
-        Firebase questionRef = new Firebase("https://instantify.firebaseio.com/ID_" + id);
-        Query queryRef = questionRef.orderByKey();
-
-        // Attach an listener to read the data at our IDs reference
-        queryRef.addChildEventListener(new ChildEventListener() {
-            @Override
-            public void onChildAdded(DataSnapshot snapshot, String previousChildKey) {
-                System.out.println("Key: " + snapshot.getKey() + " , value: " + snapshot.getValue());
-
-                if (snapshot.getKey().contentEquals("active_question")) {
-                    lectureQuestion.setText(snapshot.getValue().toString());
-                }
-
-                if (snapshot.getKey().contentEquals("answers")) {
-                    if (snapshot.getValue().toString().contains(MainActivity.deviceId)) {
-                        Toast toast = Toast.makeText(a.getApplicationContext(),
-                                "Sorry! You've answered on this question already! Please try another Lecture ID",
-                                Toast.LENGTH_LONG);
-                        toast.show();
-                    }
-                }
-            }
-
-            // Get the data on a record that has changed
-            @Override
-            public void onChildChanged(DataSnapshot dataSnapshot, String s) {
-                System.out.println("Key: " + dataSnapshot.getKey() + " , value: " + dataSnapshot.getValue());
-                lectureQuestion.setText(dataSnapshot.getValue().toString());
-            }
-
-            @Override
-            public void onChildRemoved(DataSnapshot dataSnapshot) {
-                lectureQuestion.setText("No questions today!");
-            }
-
-            @Override
-            public void onChildMoved(DataSnapshot dataSnapshot, String s) {
-
-            }
-
-            @Override
-            public void onCancelled(FirebaseError firebaseError) {
-                System.out.println("The read failed: " + firebaseError.getMessage());
-            }
-
-        });
 
     }
 
@@ -176,11 +125,75 @@ public class QuestionFragment extends Fragment {
                     confirmListener.eventShowConfirmation("-255");
                 } else {
                     submitAnswer();
+                    interestingThing.setText("");
                 }
+                InputMethodManager imm = (InputMethodManager)a.getSystemService(Context.INPUT_METHOD_SERVICE);
+                imm.hideSoftInputFromWindow(interestingThing.getWindowToken(), 0);
             }
         });
 
         return view;
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        questionRef.removeEventListener(listener);
+        System.out.println("Activity paused. ");
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        System.out.println("Activity resumed. ");
+        // Get data from bundle
+        id = MainActivity.lectureId;//getArguments().getString("id");
+        // // Get a reference to our Lecture IDs
+        questionRef = new Firebase("https://instantify.firebaseio.com/ID_" + id);
+        Query queryRef = questionRef.orderByKey();
+
+        // Attach an listener to read the data at our IDs reference
+        listener = queryRef.addChildEventListener(new ChildEventListener() {
+            @Override
+            public void onChildAdded(DataSnapshot snapshot, String previousChildKey) {
+                System.out.println("Key: " + snapshot.getKey() + " , value: " + snapshot.getValue());
+
+                if (snapshot.getKey().contentEquals("active_question")) {
+                    lectureQuestion.setText(snapshot.getValue().toString());
+                }
+
+                if (snapshot.getKey().contentEquals("answers")) {
+                    if (snapshot.getValue().toString().contains(MainActivity.deviceId)) {
+                        Toast toast = Toast.makeText(a.getApplicationContext(),
+                                "Sorry! You've answered on this question already! Please try another Lecture ID",
+                                Toast.LENGTH_LONG);
+                        toast.show();
+                    }
+                }
+            }
+
+            // Get the data on a record that has changed
+            @Override
+            public void onChildChanged(DataSnapshot dataSnapshot, String s) {
+                System.out.println("Key: " + dataSnapshot.getKey() + " , value: " + dataSnapshot.getValue());
+            }
+
+            @Override
+            public void onChildRemoved(DataSnapshot dataSnapshot) {
+                lectureQuestion.setText("No questions today!");
+            }
+
+            @Override
+            public void onChildMoved(DataSnapshot dataSnapshot, String s) {
+
+            }
+
+            @Override
+            public void onCancelled(FirebaseError firebaseError) {
+                System.out.println("The read failed: " + firebaseError.getMessage());
+            }
+
+        });
     }
 
     private void submitAnswer() {

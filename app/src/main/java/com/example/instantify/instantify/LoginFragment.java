@@ -8,6 +8,7 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -77,8 +78,11 @@ public class LoginFragment extends Fragment {
 
                 // Send event with Lection ID
                 getLectureQuestion(lectureId.getText().toString());
+                InputMethodManager imm = (InputMethodManager) a.getSystemService(Context.INPUT_METHOD_SERVICE);
+                imm.hideSoftInputFromWindow(lectureId.getWindowToken(), 0);
             }
         });
+
         return view;
     }
 
@@ -105,7 +109,7 @@ public class LoginFragment extends Fragment {
         queryRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot snapshot) {
-                System.out.println("Key: " + snapshot.getKey() + " , value: " + snapshot.getValue());
+                System.out.println("Key3: " + snapshot.getKey() + " , value: " + snapshot.getValue());
                 try {
                     if (snapshot.hasChild("active_question")) {
                         questionViewEventListener.eventShowQuestion(lectureId.getText().toString());
