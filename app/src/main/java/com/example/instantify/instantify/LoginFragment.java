@@ -103,7 +103,7 @@ public class LoginFragment extends Fragment {
          *  This must happen before any Firebase app reference is created or used. */
         Firebase.setAndroidContext(a.getApplicationContext());
 
-        Firebase questionRef = new Firebase("https://instantify.firebaseio.com/ID_" + questionID);
+        Firebase questionRef = new Firebase("https://instantify.firebaseio.com/" + questionID);
         Query queryRef = questionRef.orderByKey();
 
         queryRef.addListenerForSingleValueEvent(new ValueEventListener() {

@@ -149,7 +149,7 @@ public class QuestionFragment extends Fragment {
         // Get data from bundle
         id = MainActivity.lectureId;//getArguments().getString("id");
         // // Get a reference to our Lecture IDs
-        questionRef = new Firebase("https://instantify.firebaseio.com/ID_" + id);
+        questionRef = new Firebase("https://instantify.firebaseio.com/" + id);
         Query queryRef = questionRef.orderByKey();
 
         // Attach an listener to read the data at our IDs reference
@@ -199,7 +199,7 @@ public class QuestionFragment extends Fragment {
     private void submitAnswer() {
         Firebase myFirebaseRef = new Firebase("https://instantify.firebaseio.com");
 
-        Firebase answertRef = myFirebaseRef.child("/ID_" + id).child("answers").child(MainActivity.deviceId);
+        Firebase answertRef = myFirebaseRef.child(id).child("answers").child(MainActivity.deviceId);
         answertRef.setValue(interestingThing.getText().toString(), new Firebase.CompletionListener() {
             @Override
             public void onComplete(FirebaseError firebaseError, Firebase firebase) {
