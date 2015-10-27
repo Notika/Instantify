@@ -119,9 +119,7 @@ public class LoginFragment extends Fragment {
                                 "Sorry! The ID you have entered is not valid! Please try another Lecture ID",
                                 Toast.LENGTH_LONG);
                         toast.show();
-                        // Play music
-                        mediaPlayer = MediaPlayer.create(a.getApplicationContext(), R.raw.error);
-                        mediaPlayer.start();
+
                     }
                 } catch (NullPointerException e) {
 
