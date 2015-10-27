@@ -2,7 +2,6 @@ package com.example.instantify.instantify;
 
 import android.app.Activity;
 import android.content.Context;
-import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -25,7 +24,6 @@ import com.firebase.client.ValueEventListener;
 public class LoginFragment extends Fragment {
     Activity a;
     EditText lectureId;
-    MediaPlayer mediaPlayer;
 
     public LoginFragment() {
     }
@@ -90,10 +88,6 @@ public class LoginFragment extends Fragment {
     public void onDestroy() {
         super.onDestroy();
         questionViewEventListener = null;
-        if (mediaPlayer != null) {
-            mediaPlayer.release();
-            mediaPlayer = null;
-        }
     }
 
 
@@ -119,9 +113,6 @@ public class LoginFragment extends Fragment {
                                 "Sorry! The ID you have entered is not valid! Please try another Lecture ID",
                                 Toast.LENGTH_LONG);
                         toast.show();
-                        // Play music
-                        mediaPlayer = MediaPlayer.create(a.getApplicationContext(), R.raw.error);
-                        mediaPlayer.start();
                     }
                 } catch (NullPointerException e) {
 

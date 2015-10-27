@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string-array name="wordExceptions">
-        <item>ass</item>
         <item>4r5e</item>
         <item>5h1t</item>
         <item>5hit</item>
@@ -11,7 +10,6 @@
         <item>ar5e</item>
         <item>arrse</item>
         <item>arse</item>
-        <item>ass</item>
         <item>ass-fucker</item>
         <item>asses</item>
         <item>assfucker</item>
@@ -58,7 +56,6 @@
         <item>breasts</item>
         <item>buceta</item>
         <item>bugger</item>
-        <item>bum</item>
         <item>bunny fucker</item>
         <item>butt</item>
         <item>butthole</item>
@@ -196,7 +193,6 @@
         <item>>fuckwit</item>
         <item>udge packer</item>
         <item>fudgepacker</item>
-        <item>fuk</item>
         <item>fuker</item>
         <item>fukker</item>
         <item>fukkin</item>
@@ -212,25 +208,21 @@
         <item>gaylord</item>
         <item>gaysex</item>
         <item>goatse</item>
-        <item>God</item>
         <item>god-dam</item>
         <item>god-damned</item>
         <item>goddamn</item>
         <item>goddamned</item>
         <item>hardcoresex</item>
-        <item>hell</item>
         <item>heshe</item>
         <item>hoar</item>
         <item>hoare</item>
         <item>hoer</item>
-        <item>homo</item>
         <item>hore</item>
         <item>horniest</item>
         <item>horny</item>
         <item>hotsex</item>
         <item>jack-off</item>
         <item>jackoff</item>
-        <item>jap</item>
         <item>jerk-off</item>
         <item>jism</item>
         <item>jiz</item>
@@ -296,7 +288,6 @@
         <item>motherfuckings</item>
         <item>motherfuckka</item>
         <item>motherfucks</item>
-        <item>muff</item>
         <item>mutha</item>
         <item>muthafecker</item>
         <item>muthafuckker</item>
@@ -313,7 +304,6 @@
         <item>niggaz</item>
         <item>nigger</item>
         <item>niggers</item>
-        <item>nob</item>
         <item>nob jokey</item>
         <item>nobhead</item>
         <item>nobjocky</item>
@@ -376,7 +366,6 @@
         <item>scrote</item>
         <item>scrotum</item>
         <item>semen</item>
-        <item>sex</item>
         <item>sh!+</item>
         <item>sh!t</item>
         <item>sh1t</item>
@@ -404,10 +393,8 @@
         <item>shittings</item>
         <item>shitty</item>
         <item>skank</item>
-        <item>slut</item>
         <item>sluts</item>
         <item>smegma</item>
-        <item>smut</item>
         <item>snatch</item>
         <item>son-of-a-bitch</item>
         <item>spac</item>
@@ -419,10 +406,8 @@
         <item>vteez</item>
         <item>testical</item>
         <item>testicle</item>,
-        <item>tit</item>
         <item>titfuck</item>
         <item>tits</item>
-        <item>titt</item>
         <item>tittie5</item>
         <item>tittiefucker</item>,
         <item>titties</item>
@@ -440,7 +425,6 @@
         <item>v14gra</item>
         <item>v1gra</item>
         <item>vagina</item>
-        <item>viagra</item>
         <item>vulva</item>
         <item>w00se</item>
         <item>wang</item>

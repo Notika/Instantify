@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.text.InputFilter;
 import android.text.Spanned;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,6 +22,7 @@ import com.firebase.client.DataSnapshot;
 import com.firebase.client.Firebase;
 import com.firebase.client.FirebaseError;
 import com.firebase.client.Query;
+import com.firebase.client.ValueEventListener;
 
 public class QuestionFragment extends Fragment {
 
@@ -124,14 +126,16 @@ public class QuestionFragment extends Fragment {
                 if (alreadyAnswered) {
                     confirmListener.eventShowConfirmation("-255");
                 } else {
-                    submitAnswer();
-                    interestingThing.setText("");
+                    //temp. test check
+                    if (!interestingThing.getText().toString().isEmpty()) {
+                        submitAnswer();
+                        interestingThing.setText("");
+                    }
                 }
-                InputMethodManager imm = (InputMethodManager)a.getSystemService(Context.INPUT_METHOD_SERVICE);
+                InputMethodManager imm = (InputMethodManager) a.getSystemService(Context.INPUT_METHOD_SERVICE);
                 imm.hideSoftInputFromWindow(interestingThing.getWindowToken(), 0);
             }
         });
-
         return view;
     }
 
@@ -161,15 +165,6 @@ public class QuestionFragment extends Fragment {
                 if (snapshot.getKey().contentEquals("active_question")) {
                     lectureQuestion.setText(snapshot.getValue().toString());
                 }
-
-                if (snapshot.getKey().contentEquals("answers")) {
-                    if (snapshot.getValue().toString().contains(MainActivity.deviceId)) {
-                        Toast toast = Toast.makeText(a.getApplicationContext(),
-                                "Sorry! You've answered on this question already! Please try another Lecture ID",
-                                Toast.LENGTH_LONG);
-                        toast.show();
-                    }
-                }
             }
 
             // Get the data on a record that has changed
@@ -192,14 +187,16 @@ public class QuestionFragment extends Fragment {
             public void onCancelled(FirebaseError firebaseError) {
                 System.out.println("The read failed: " + firebaseError.getMessage());
             }
-
         });
     }
 
     private void submitAnswer() {
         Firebase myFirebaseRef = new Firebase("https://instantify.firebaseio.com");
-
         Firebase answertRef = myFirebaseRef.child(id).child("answers").child(MainActivity.deviceId);
+
+        Log.d("TEST", id);
+        Log.d("TEST", interestingThing.getText().toString());
+
         answertRef.setValue(interestingThing.getText().toString(), new Firebase.CompletionListener() {
             @Override
             public void onComplete(FirebaseError firebaseError, Firebase firebase) {
@@ -211,12 +208,12 @@ public class QuestionFragment extends Fragment {
                 }
             }
         });
-
     }
+
 
     @Override
     public void onDestroy() {
         super.onDestroy();
-        confirmListener = null;
+        //confirmListener = null;
     }
 }
