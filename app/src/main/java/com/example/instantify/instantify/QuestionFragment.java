@@ -22,7 +22,6 @@ import com.firebase.client.DataSnapshot;
 import com.firebase.client.Firebase;
 import com.firebase.client.FirebaseError;
 import com.firebase.client.Query;
-import com.firebase.client.ValueEventListener;
 
 public class QuestionFragment extends Fragment {
 
@@ -97,10 +96,8 @@ public class QuestionFragment extends Fragment {
                     Resources res = a.getResources();
                     String[] cleanWords = res.getStringArray(R.array.wordExceptions); //call the index array
 
-                    for (int i = 0; i < cleanWords.length; i++)
-                    {
-                        if (text.toLowerCase().contains(cleanWords[i]))
-                        {
+                    for (int i = 0; i < cleanWords.length; i++) {
+                        if (text.toLowerCase().contains(cleanWords[i])) {
                             textView.setText("");
                             break;
                         }
@@ -124,7 +121,10 @@ public class QuestionFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 if (alreadyAnswered) {
-                    confirmListener.eventShowConfirmation("-255");
+                    Toast toast = Toast.makeText(a.getApplicationContext(),
+                            "Sorry! Already answered!",
+                            Toast.LENGTH_LONG);
+                    toast.show();
                 } else {
                     //temp. test check
                     if (!interestingThing.getText().toString().isEmpty()) {
@@ -151,7 +151,7 @@ public class QuestionFragment extends Fragment {
         super.onResume();
         System.out.println("Activity resumed. ");
         // Get data from bundle
-        id = MainActivity.lectureId;//getArguments().getString("id");
+        id = MainActivity.lectureId;
         // // Get a reference to our Lecture IDs
         questionRef = new Firebase("https://instantify.firebaseio.com/" + id);
         Query queryRef = questionRef.orderByKey();
@@ -164,6 +164,16 @@ public class QuestionFragment extends Fragment {
 
                 if (snapshot.getKey().contentEquals("active_question")) {
                     lectureQuestion.setText(snapshot.getValue().toString());
+                }
+
+                if (snapshot.getKey().contentEquals("answers")) {
+                    if (snapshot.getValue().toString().contains(MainActivity.deviceId)){
+                        alreadyAnswered = true;
+                        Toast toast = Toast.makeText(a.getApplicationContext(),
+                                "You have already answered on this question!",
+                                Toast.LENGTH_LONG);
+                        toast.show();
+                    }
                 }
             }
 
