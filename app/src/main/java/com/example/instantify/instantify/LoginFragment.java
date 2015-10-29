@@ -73,9 +73,18 @@ public class LoginFragment extends Fragment {
         login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                String input = lectureId.getText().toString();
+                // Check input value, only not null allowed
+                if (!input.equals("")) {
+                    // Send event with Lection ID
+                    getLectureQuestion(input);
+                } else {
+                    Toast toast = Toast.makeText(a.getApplicationContext(),
+                            "Sorry! Empty value is not allowed",
+                            Toast.LENGTH_LONG);
+                    toast.show();
+                }
 
-                // Send event with Lection ID
-                getLectureQuestion(lectureId.getText().toString());
                 InputMethodManager imm = (InputMethodManager) a.getSystemService(Context.INPUT_METHOD_SERVICE);
                 imm.hideSoftInputFromWindow(lectureId.getWindowToken(), 0);
             }
