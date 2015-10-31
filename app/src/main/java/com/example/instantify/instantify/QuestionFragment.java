@@ -24,8 +24,7 @@ import com.firebase.client.FirebaseError;
 import com.firebase.client.Query;
 
 public class QuestionFragment extends Fragment {
-    //TODO: MOVE ANSWER LINE ABOVE KEYBOARD.
-    //TODO: REMOVE DEVICE ID CHECK ON RETURN
+    //TODO: REMOVE STATIC HAS ANSWERED CHECK
     //TODO: FIX FRAGMENT STACK ORDER.
     Activity a;
     Firebase questionRef = null;
@@ -171,10 +170,6 @@ public class QuestionFragment extends Fragment {
                 if (snapshot.getKey().contentEquals("answers")) {
                     if (snapshot.getValue().toString().contains(MainActivity.deviceId)){
                         alreadyAnswered = true;
-                        Toast toast = Toast.makeText(a.getApplicationContext(),
-                                "You have already answered on this question!",
-                                Toast.LENGTH_LONG);
-                        toast.show();
                     }
                 }
             }
@@ -182,6 +177,9 @@ public class QuestionFragment extends Fragment {
             // Get the data on a record that has changed
             @Override
             public void onChildChanged(DataSnapshot dataSnapshot, String s) {
+                if (dataSnapshot.getKey().contentEquals("active_question")) {
+                    lectureQuestion.setText(dataSnapshot.getValue().toString());
+                }
                 System.out.println("Key: " + dataSnapshot.getKey() + " , value: " + dataSnapshot.getValue());
             }
 
