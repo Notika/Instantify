@@ -64,7 +64,6 @@ public class QuestionFragment extends Fragment {
 
         // Retain this fragment across configuration changes.
         setRetainInstance(true);
-
     }
 
     @Override
@@ -190,7 +189,7 @@ public class QuestionFragment extends Fragment {
 
             @Override
             public void onChildMoved(DataSnapshot dataSnapshot, String s) {
-
+                //leave empty
             }
 
             @Override
@@ -219,7 +218,6 @@ public class QuestionFragment extends Fragment {
             }
         });
     }
-
 
     @Override
     public void onDestroy() {

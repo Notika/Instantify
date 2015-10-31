@@ -126,7 +126,7 @@ public class MainActivity extends AppCompatActivity implements
                 System.out.println("Key2: " + dataSnapshot.getKey() + " , value: " + dataSnapshot.getValue());
                 // Pop the last fragment transition from the manager's fragment
                 // back stack and return to previous page.
-                getSupportFragmentManager().popBackStackImmediate();
+                getSupportFragmentManager().popBackStackImmediate(); //MAY CAUSE UNEXPECTED STACK CHANGES
             }
 
             @Override

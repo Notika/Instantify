@@ -1,17 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string-array name="wordExceptions">
-        <item>4r5e</item>
-        <item>5h1t</item>
-        <item>5hit</item>
-        <item>a55</item>
-        <item>anal</item>
-        <item>anus</item>
-        <item>ar5e</item>
         <item>arrse</item>
-        <item>arse</item>
         <item>ass-fucker</item>
-        <item>asses</item>
         <item>assfucker</item>
         <item>assfukka</item>
         <item>asshole</item>
@@ -22,11 +13,7 @@
         <item>b00bs</item>
         <item>b17ch</item>
         <item>b1tch</item>
-        <item>ballbag</item>
-        <item>balls</item>
         <item>ballsack</item>
-        <item>bastard</item>
-        <item>beastial</item>
         <item>beastiality</item>
         <item>bellend</item>
         <item>bestial</item>
@@ -39,25 +26,18 @@
         <item>bitches</item>
         <item>bitchin</item>
         <item>bitching</item>
-        <item>bloody</item>
         <item>blow job</item>
         <item>blowjob</item>
         <item>blowjobs</item>
         <item>boiolas</item>
         <item>bollock</item>
         <item>bollok</item>
-        <item>boner</item>
-        <item>boob</item>
-        <item>boobs</item>
         <item>booobs</item>
         <item>boooobs</item>
         <item>booooobs</item>
         <item>booooooobs</item>
-        <item>breasts</item>
         <item>buceta</item>
-        <item>bugger</item>
         <item>bunny fucker</item>
-        <item>butt</item>
         <item>butthole</item>
         <item>buttmuch</item>
         <item>buttplug</item>
@@ -68,17 +48,12 @@
         <item>chink</item>
         <item>cipa</item>
         <item>cl1t</item>
-        <item>clit</item>
-        <item>clitoris</item>
-        <item>clits</item>
         <item>cnut</item>
-        <item>cock</item>
         <item>cock-sucker</item>
         <item>cockface</item>
         <item>cockhead</item>
         <item>cockmunch</item>
         <item>cockmuncher</item>
-        <item>cocks</item>
         <item>cocksuck</item>
         <item>cocksucked</item>
         <item>cocksucker</item>
@@ -86,25 +61,17 @@
         <item>cocksucks</item>
         <item>cocksuka</item>
         <item>cocksukka</item>
-        <item>cok</item>
         <item>cokmuncher</item>
         <item>coksucka</item>
-        <item>coon</item>
-        <item>cox</item>
-        <item>crap</item>
-        <item>cum</item>
         <item>cummer</item>
         <item>cumming</item>
-        <item>cums</item>
         <item>cumshot</item>
         <item>cunilingus</item>
         <item>cunillingus</item>
         <item>cunnilingus</item>
-        <item>cunt</item>
         <item>cuntlick</item>
         <item>cuntlicker</item>
         <item>cuntlicking</item>
-        <item>cunts</item>
         <item>cyalis</item>
         <item>cyberfuc</item>
         <item>cyberfuck</item>
@@ -112,23 +79,13 @@
         <item>cyberfucker</item>
         <item>cyberfuckers</item>
         <item>cyberfucking</item>
-        <item>d1ck</item>
-        <item>damn</item>
-        <item>dick</item>
         <item>dickhead</item>
-        <item>dildo</item>
-        <item>dildos</item>
-        <item>dink</item>
-        <item>dinks</item>
-        <item>dirsa</item>
         <item>dlck</item>
         <item>dog-fucker</item>
         <item>doggin</item>
         <item>dogging</item>
         <item>donkeyribber</item>
         <item>doosh</item>
-        <item>duche</item>
-        <item>dyke</item>
         <item>ejaculate</item>
         <item>ejaculated</item>
         <item>ejaculates</item>
@@ -139,15 +96,12 @@
         <item>f u c k</item>
         <item>f u c k e r</item>,
         <item>f4nny</item>
-        <item>fag</item>
         <item>fagging</item>
         <item>faggitt</item>
         <item>faggot</item>
         <item>faggs</item>
         <item>fagot</item>
         <item>fagots</item>
-        <item>fags</item>
-        <item>fanny</item>
         <item>fannyflaps</item>,
         <item>fannyfucker</item>
         <item>fanyy</item>
@@ -155,11 +109,9 @@
         <item>fcuk</item>
         <item>fcuker</item>
         <item>fcuking</item>
-        <item>feck</item>
         <item>fecker</item>
         <item>felching</item>
         <item>fellate</item>
-        <item>fellatio</item>
         <item>fingerfuck</item>
         <item>fingerfucked</item>
         <item>fingerfucker</item>
@@ -174,32 +126,24 @@
         <item>fistfuckings</item>
         <item>fistfucks</item>
         <item>flange</item>
-        <item>fook</item>
         <item>fooker</item>
-        <item>fuck</item>
-        <item>>fucka</item>
+        <item>fucka</item>
         <item>fucked</item>
         <item>fucker</item>
         <item>fuckers</item>
         <item>fuckhead</item>
         <item>fuckheads</item>
-        <item>fuckin</item>
-        <item>fucking</item>
         <item>fuckings</item>
         <item>fuckingshitmotherfucker</item>
         <item>fuckme</item>
-        <item>fucks</item>
         <item>fuckwhit</item>
-        <item>>fuckwit</item>
+        <item>fuckwit</item>
         <item>udge packer</item>
         <item>fudgepacker</item>
-        <item>fuker</item>
         <item>fukker</item>
         <item>fukkin</item>
-        <item>fuks</item>
         <item>fukwhit</item>
         <item>fukwit</item>
-        <item>fux</item>
         <item>fux0r</item>
         <item>f_u_c_k</item>
         <item>gangbang</item>
@@ -208,50 +152,25 @@
         <item>gaylord</item>
         <item>gaysex</item>
         <item>goatse</item>
-        <item>god-dam</item>
-        <item>god-damned</item>
-        <item>goddamn</item>
         <item>goddamned</item>
         <item>hardcoresex</item>
-        <item>heshe</item>
-        <item>hoar</item>
-        <item>hoare</item>
-        <item>hoer</item>
-        <item>hore</item>
         <item>horniest</item>
-        <item>horny</item>
         <item>hotsex</item>
         <item>jack-off</item>
         <item>jackoff</item>
         <item>jerk-off</item>
-        <item>jism</item>
-        <item>jiz</item>
-        <item>jizm</item>
-        <item>jizz</item>
-        <item>kawk</item>
-        <item>knob</item>
         <item>knobead</item>
         <item>knobed</item>
         <item>knobend</item>
         <item>knobhead</item>
         <item>knobjocky</item>
         <item>knobjokey</item>
-        <item>kock</item>
         <item>kondum</item>
         <item>kondums</item>
-        <item>kum</item>
         <item>kummer</item>
         <item>kumming</item>
-        <item>kums</item>
         <item>kunilingus</item>
-        <item>l3i+ch</item>
-        <item>l3itch</item>
-        <item>labia</item>
-        <item>lmfao</item>
-        <item>lust</item>
         <item>lusting</item>
-        <item>m0f0</item>
-        <item>m0fo</item>
         <item>m45terbate</item>
         <item>ma5terb8</item>
         <item>ma5terbate</item>
@@ -260,13 +179,7 @@
         <item>masterb8</item>
         <item>masterbat*</item>
         <item>masterbat3</item>
-        <item>masterbate</item>
-        <item>masterbation</item>
         <item>masterbations</item>
-        <item>masturbate</item>
-        <item>mo-fo</item>
-        <item>mof0</item>
-        <item>mofo</item>
         <item>mothafuck</item>
         <item>mothafucka</item>
         <item>mothafuckas</item>
@@ -288,10 +201,8 @@
         <item>motherfuckings</item>
         <item>motherfuckka</item>
         <item>motherfucks</item>
-        <item>mutha</item>
         <item>muthafecker</item>
         <item>muthafuckker</item>
-        <item>muther</item>
         <item>mutherfucker</item>
         <item>n1gga</item>
         <item>n1gger</item>
@@ -309,29 +220,17 @@
         <item>nobjocky</item>
         <item>nobjokey</item>
         <item>numbnuts</item>
-        <item>nutsack</item>
-        <item>orgasm</item>
         <item>orgasims</item>
-        <item>orgasm</item>
-        <item>orgasms</item>
         <item>p0rn</item>
-        <item>pawn</item>
-        <item>pecker</item>
-        <item>penis</item>
         <item>penisfucker</item>
         <item>phonesex</item>
         <item>phuck</item>
-        <item>phuk</item>
         <item>phuked</item>
         <item>phuking</item>
         <item>phukked</item>
         <item>phukking</item>
-        <item>phuks</item>
-        <item>phuq</item>
         <item>pigfucker</item>
         <item>pimpis</item>
-        <item>piss</item>
-        <item>pissed</item>
         <item>pisser</item>
         <item>pissers</item>
         <item>pisses</item>
@@ -339,45 +238,21 @@
         <item>pissin</item>
         <item>pissing</item>
         <item>pissoff</item>
-        <item>poop</item>
-        <item>porn</item>
-        <item>porno</item>
-        <item>pornography</item>
         <item>pornos</item>
-        <item>prick</item>
-        <item>pricks</item>
-        <item>pron</item>
-        <item>pube</item>
-        <item>pusse</item>
-        <item>pussi</item>
         <item>pussies</item>
-        <item>pussy</item>
         <item>pussys</item>
-        <item>rectum</item>
-        <item>retard</item>
         <item>rimjaw</item>
         <item>rimming</item>
-        <item>s hit</item>
-        <item>s.o.b.</item>
-        <item>sadist</item>
         <item>schlong</item>
         <item>screwing</item>
-        <item>scroat</item>
-        <item>scrote</item>
-        <item>scrotum</item>
-        <item>semen</item>
         <item>sh!+</item>
         <item>sh!t</item>
         <item>sh1t</item>
-        <item>shag</item>
         <item>shagger</item>
         <item>shaggin</item>
         <item>shagging</item>
-        <item>shemale</item>
         <item>shi+</item>
-        <item>shit</item>
         <item>shitdick</item>
-        <item>shite</item>
         <item>shited</item>
         <item>shitey</item>
         <item>shitfuck</item>
@@ -385,7 +260,6 @@
         <item>shithead</item>
         <item>shiting</item>
         <item>shitings</item>
-        <item>shits</item>
         <item>shitted</item>
         <item>shitter</item>
         <item>shitters</item>
@@ -393,21 +267,17 @@
         <item>shittings</item>
         <item>shitty</item>
         <item>skank</item>
-        <item>sluts</item>
         <item>smegma</item>
         <item>snatch</item>
         <item>son-of-a-bitch</item>
-        <item>spac</item>
         <item>spunk</item>
         <item>s_h_i_t</item>
         <item>t1tt1e5</item>
         <item>t1tties</item>
-        <item>teets</item>
         <item>vteez</item>
         <item>testical</item>
         <item>testicle</item>,
         <item>titfuck</item>
-        <item>tits</item>
         <item>tittie5</item>
         <item>tittiefucker</item>,
         <item>titties</item>
@@ -415,20 +285,14 @@
         <item>tittywank</item>
         <item>titwank</item>
         <item>tosser</item>
-        <item>turd</item>
         <item>tw4t</item>
-        <item>twat</item>
         <item>twathead</item>
         <item>twatty</item>
         <item>twunt</item>
         <item>twunter</item>
         <item>v14gra</item>
         <item>v1gra</item>
-        <item>vagina</item>
-        <item>vulva</item>
         <item>w00se</item>
-        <item>wang</item>
-        <item>wank</item>
         <item>wanker</item>
         <item>wanky</item>
         <item>whoar</item>
@@ -436,6 +300,5 @@
         <item>willies</item>
         <item>willy</item>
         <item>xrated</item>
-        <item>xxx</item>
     </string-array>
 </resources>
