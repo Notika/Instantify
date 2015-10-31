@@ -4,6 +4,7 @@ import android.content.Context;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.telephony.TelephonyManager;
+import android.view.View;
 
 import com.example.instantify.instantify.LoginFragment.onShowQuestionListener;
 import com.example.instantify.instantify.QuestionFragment.onShowConfirmListener;
@@ -13,6 +14,7 @@ import com.firebase.client.Firebase;
 import com.firebase.client.FirebaseError;
 import com.firebase.client.Query;
 
+import java.util.Random;
 import java.util.UUID;
 
 public class MainActivity extends AppCompatActivity implements
@@ -26,6 +28,11 @@ public class MainActivity extends AppCompatActivity implements
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        //TODO: MOVE AND LOAD FROM XML FILE
+        int colors[] = {0xff4cb897, 0xff2C868A, 0xff9F2525, 0xff9F2D75, 0xff3B5B9E, 0xff272623, 0xffEF862B};
+        int idx = new Random().nextInt(colors.length);
+
+        setActivityBackgroundColor(colors[idx]);
 
         if (savedInstanceState == null) {
 
@@ -51,8 +58,14 @@ public class MainActivity extends AppCompatActivity implements
 
         UUID deviceUuid = new UUID(androidId.hashCode(), ((long) tmDevice.hashCode() << 32) | tmSerial.hashCode());
         // Phone ID is 64 symbols long. Take only a last part of it.
+        // TODO: maybe use all of 64 symbols to minimize collision
         String[] separated = deviceUuid.toString().split("-");
         return separated[4];
+    }
+
+    public void setActivityBackgroundColor(int color) {
+        View view = this.getWindow().getDecorView();
+        view.setBackgroundColor(color);
     }
 
     @Override

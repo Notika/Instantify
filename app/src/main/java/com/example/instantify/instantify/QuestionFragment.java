@@ -24,7 +24,9 @@ import com.firebase.client.FirebaseError;
 import com.firebase.client.Query;
 
 public class QuestionFragment extends Fragment {
-
+    //TODO: MOVE ANSWER LINE ABOVE KEYBOARD.
+    //TODO: REMOVE DEVICE ID CHECK ON RETURN
+    //TODO: FIX FRAGMENT STACK ORDER.
     Activity a;
     Firebase questionRef = null;
     static String id;
@@ -224,6 +226,5 @@ public class QuestionFragment extends Fragment {
     @Override
     public void onDestroy() {
         super.onDestroy();
-        //confirmListener = null;
     }
 }

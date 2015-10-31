@@ -119,7 +119,7 @@ public class LoginFragment extends Fragment {
                     } else {
                         // No such lection ID
                         Toast toast = Toast.makeText(a.getApplicationContext(),
-                                "Sorry! The ID you have entered is not valid! Please try another Lecture ID",
+                                "Please enter a lecture ID.",
                                 Toast.LENGTH_LONG);
                         toast.show();
                     }
