@@ -33,9 +33,11 @@
             android:textColor="#FFEEEEEE"
             android:textColorHint="#cccccc"
             android:backgroundTint="#FFEEEEEE"
+            android:imeOptions="actionDone"
             android:lines="1"
             android:maxLines="1"
-            android:maxLength="15" />
+            android:maxLength="15"
+            android:singleLine="true" />
     </LinearLayout>
 
     <LinearLayout
