@@ -61,7 +61,6 @@ public class QuestionFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         // Retain this fragment across configuration changes.
         setRetainInstance(true);
     }
@@ -87,6 +86,7 @@ public class QuestionFragment extends Fragment {
                 return null;
             }
         };
+
         interestingThing.setFilters(new InputFilter[]{filter});
         interestingThing.addTextChangedListener(new TextValidator(interestingThing) {
             @Override
@@ -143,13 +143,11 @@ public class QuestionFragment extends Fragment {
     public void onPause() {
         super.onPause();
         questionRef.removeEventListener(listener);
-        System.out.println("Activity paused. ");
     }
 
     @Override
     public void onResume() {
         super.onResume();
-        System.out.println("Activity resumed. ");
         // Get data from bundle
         id = MainActivity.lectureId;
         // // Get a reference to our Lecture IDs
@@ -160,12 +158,9 @@ public class QuestionFragment extends Fragment {
         listener = queryRef.addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(DataSnapshot snapshot, String previousChildKey) {
-                System.out.println("Key: " + snapshot.getKey() + " , value: " + snapshot.getValue());
-
                 if (snapshot.getKey().contentEquals("active_question")) {
                     lectureQuestion.setText(snapshot.getValue().toString());
                 }
-
                 if (snapshot.getKey().contentEquals("answers")) {
                     if (snapshot.getValue().toString().contains(MainActivity.deviceId)){
                         alreadyAnswered = true;
@@ -179,7 +174,6 @@ public class QuestionFragment extends Fragment {
                 if (dataSnapshot.getKey().contentEquals("active_question")) {
                     lectureQuestion.setText(dataSnapshot.getValue().toString());
                 }
-                System.out.println("Key: " + dataSnapshot.getKey() + " , value: " + dataSnapshot.getValue());
             }
 
             @Override
@@ -194,7 +188,7 @@ public class QuestionFragment extends Fragment {
 
             @Override
             public void onCancelled(FirebaseError firebaseError) {
-                System.out.println("The read failed: " + firebaseError.getMessage());
+                Log.d("DB", firebaseError.getMessage());
             }
         });
     }
@@ -210,9 +204,8 @@ public class QuestionFragment extends Fragment {
             @Override
             public void onComplete(FirebaseError firebaseError, Firebase firebase) {
                 if (firebaseError != null) {
-                    System.out.println("Data could not be saved. " + firebaseError.getMessage());
+                    Log.d("DB", firebaseError.getMessage());
                 } else {
-                    System.out.println("Data saved successfully.");
                     confirmListener.eventShowConfirmation(id);
                 }
             }

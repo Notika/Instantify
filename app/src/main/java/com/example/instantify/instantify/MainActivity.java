@@ -42,13 +42,11 @@ public class MainActivity extends AppCompatActivity implements
                     .add(R.id.container, loginF)
                     .commit();
         }
-
         // Get unique phone ID
         deviceId = getUniquePhoneId();
     }
 
     public String getUniquePhoneId() {
-
         final TelephonyManager tm = (TelephonyManager) getSystemService(Context.TELEPHONY_SERVICE);
         final String tmDevice, tmSerial, androidId;
 
@@ -117,16 +115,15 @@ public class MainActivity extends AppCompatActivity implements
         queryRef.addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(DataSnapshot snapshot, String previousChildKey) {
-                System.out.println("Key1: " + snapshot.getKey() + " , value: " + snapshot.getValue());
+               //leave emptyy
             }
 
             // Get the data on a record that has changed
             @Override
             public void onChildChanged(DataSnapshot dataSnapshot, String s) {
-                System.out.println("Key2: " + dataSnapshot.getKey() + " , value: " + dataSnapshot.getValue());
                 // Pop the last fragment transition from the manager's fragment
                 // back stack and return to previous page.
-                getSupportFragmentManager().popBackStackImmediate(); //MAY CAUSE UNEXPECTED STACK CHANGES
+                getSupportFragmentManager().popBackStackImmediate(); //TODO: MAY CAUSE UNEXPECTED STACK CHANGES
             }
 
             @Override
@@ -139,7 +136,6 @@ public class MainActivity extends AppCompatActivity implements
 
             @Override
             public void onCancelled(FirebaseError firebaseError) {
-                System.out.println("The read failed: " + firebaseError.getMessage());
             }
 
         });

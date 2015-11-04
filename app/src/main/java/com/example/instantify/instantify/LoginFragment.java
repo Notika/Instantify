@@ -18,9 +18,6 @@ import com.firebase.client.FirebaseError;
 import com.firebase.client.Query;
 import com.firebase.client.ValueEventListener;
 
-/**
- * Created by Nataly on 2015-10-17.
- */
 public class LoginFragment extends Fragment {
     Activity a;
     EditText lectureId;
@@ -99,9 +96,7 @@ public class LoginFragment extends Fragment {
         questionViewEventListener = null;
     }
 
-
     private void getLectureQuestion(String questionID) {
-
         /** The Firebase library must be initialized once with an Android context.
          *  This must happen before any Firebase app reference is created or used. */
         Firebase.setAndroidContext(a.getApplicationContext());
@@ -112,7 +107,6 @@ public class LoginFragment extends Fragment {
         queryRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot snapshot) {
-                System.out.println("Key3: " + snapshot.getKey() + " , value: " + snapshot.getValue());
                 try {
                     if (snapshot.hasChild("active_question")) {
                         questionViewEventListener.eventShowQuestion(lectureId.getText().toString());

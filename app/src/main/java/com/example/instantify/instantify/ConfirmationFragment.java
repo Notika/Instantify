@@ -10,10 +10,6 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 
-/**
- * Created by Nataly on 2015-10-17.
- */
-
 public class ConfirmationFragment extends Fragment {
 
     Activity a;
