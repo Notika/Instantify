@@ -24,7 +24,6 @@ import com.firebase.client.FirebaseError;
 import com.firebase.client.Query;
 
 public class QuestionFragment extends Fragment {
-    //TODO: REMOVE STATIC HAS ANSWERED CHECK
     //TODO: FIX FRAGMENT STACK ORDER.
     Activity a;
     Firebase questionRef = null;
@@ -87,7 +86,7 @@ public class QuestionFragment extends Fragment {
             }
         };
 
-        interestingThing.setFilters(new InputFilter[]{filter});
+        //interestingThing.setFilters(new InputFilter[]{filter});
         interestingThing.addTextChangedListener(new TextValidator(interestingThing) {
             @Override
             public void validate(TextView textView, String text) {

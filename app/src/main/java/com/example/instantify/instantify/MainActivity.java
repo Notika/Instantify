@@ -109,6 +109,7 @@ public class MainActivity extends AppCompatActivity implements
 
         // Get a reference to our Lecture IDs
         Firebase questionRef = new Firebase("https://instantify.firebaseio.com/" + elementId);
+
         Query queryRef = questionRef.orderByKey();
 
         // Attach an listener to read the data at our IDs reference

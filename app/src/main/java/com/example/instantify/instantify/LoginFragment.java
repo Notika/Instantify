@@ -93,7 +93,7 @@ public class LoginFragment extends Fragment {
     @Override
     public void onDestroy() {
         super.onDestroy();
-        questionViewEventListener = null;
+        //questionViewEventListener = null;
     }
 
     private void getLectureQuestion(String questionID) {
