@@ -28,12 +28,12 @@ public class QuestionFragment extends Fragment {
     //TODO: FIX FRAGMENT STACK ORDER.
     Activity a;
     Firebase questionRef = null;
+    Firebase activeRef;
     static String id;
     EditText interestingThing;
     TextView lectureQuestion;
     boolean alreadyAnswered = false;
-    ChildEventListener listener;
-
+    ValueEventListener listener;
     public QuestionFragment() {
     }
 
@@ -141,6 +141,7 @@ public class QuestionFragment extends Fragment {
 
     @Override
     public void onPause() {
+        activeRef.removeEventListener(listener);
         super.onPause();
     }
 
@@ -151,14 +152,13 @@ public class QuestionFragment extends Fragment {
         id = MainActivity.lectureId;
         // // Get a reference to our Lecture IDs
         questionRef = new Firebase("https://instantify.firebaseio.com/" + id);
-
         // Attach an listener to read the data at our IDs reference
-        Firebase activeRef = questionRef.child("active_question");
+        activeRef = questionRef.child("active_question");
         final Firebase answerRef = questionRef.child("answers");
 
         // Value event listener for active question
         //This event listener runs once and then everytime there is update
-        activeRef.addValueEventListener(new ValueEventListener() {
+        activeRef.addValueEventListener(listener = new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 lectureQuestion.setText(dataSnapshot.getValue().toString());
