@@ -11,12 +11,6 @@ import com.example.instantify.instantify.LoginFragment.onShowQuestionListener;
 import com.example.instantify.instantify.QuestionFragment.onShowConfirmListener;
 import com.example.instantify.instantify.ConfirmationFragment.pullFromStackListener;
 
-import com.firebase.client.ChildEventListener;
-import com.firebase.client.DataSnapshot;
-import com.firebase.client.Firebase;
-import com.firebase.client.FirebaseError;
-import com.firebase.client.Query;
-
 import java.util.Random;
 import java.util.UUID;
 
@@ -110,44 +104,9 @@ public class MainActivity extends AppCompatActivity implements
                 .replace(R.id.container, confirmF)
                 .addToBackStack(null)
                 .commit();
-        /**
-        // Get a reference to our Lecture IDs
-        Firebase questionRef = new Firebase("https://instantify.firebaseio.com/" + elementId);
-
-        Query queryRef = questionRef.orderByKey();
-
-        // Attach an listener to read the data at our IDs reference
-        queryRef.addChildEventListener(new ChildEventListener() {
-            @Override
-            public void onChildAdded(DataSnapshot snapshot, String previousChildKey) {
-               //leave emptyy
-            }
-
-            // Get the data on a record that has changed
-            @Override
-            public void onChildChanged(DataSnapshot dataSnapshot, String s) {
-                // Pop the last fragment transition from the manager's fragment
-                // back stack and return to previous page.
-                getSupportFragmentManager().popBackStackImmediate(); //TODO: MAY CAUSE UNEXPECTED STACK CHANGES
-            }
-
-            @Override
-            public void onChildRemoved(DataSnapshot dataSnapshot) {
-            }
-
-            @Override
-            public void onChildMoved(DataSnapshot dataSnapshot, String s) {
-            }
-
-            @Override
-            public void onCancelled(FirebaseError firebaseError) {
-            }
-
-        }); */
     }
 
     public void pullFromStack() {
-        Log.d("TEST", "PULLING FROM THE STACK!");
         getSupportFragmentManager().popBackStackImmediate();
     }
 }

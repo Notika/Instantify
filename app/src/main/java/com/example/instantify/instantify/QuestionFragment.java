@@ -184,45 +184,6 @@ public class QuestionFragment extends Fragment {
                 Log.d("DB", firebaseError.getMessage());
             }
         });
-
-        /**
-        Query queryRef = questionRef.orderByKey();
-        listener = queryRef.addChildEventListener(new ChildEventListener() {
-            @Override
-            public void onChildAdded(DataSnapshot snapshot, String previousChildKey) {
-                if (snapshot.getKey().contentEquals("active_question")) {
-                    lectureQuestion.setText(snapshot.getValue().toString());
-                }
-                if (snapshot.getKey().contentEquals("answers")) {
-                    if (snapshot.getValue().toString().contains(MainActivity.deviceId)){
-                        alreadyAnswered = true;
-                    }
-                }
-            }
-
-            // Get the data on a record that has changed
-            @Override
-            public void onChildChanged(DataSnapshot dataSnapshot, String s) {
-                if (dataSnapshot.getKey().contentEquals("active_question")) {
-                    lectureQuestion.setText(dataSnapshot.getValue().toString());
-                }
-            }
-
-            @Override
-            public void onChildRemoved(DataSnapshot dataSnapshot) {
-                lectureQuestion.setText("No questions today!");
-            }
-
-            @Override
-            public void onChildMoved(DataSnapshot dataSnapshot, String s) {
-                //leave empty
-            }
-
-            @Override
-            public void onCancelled(FirebaseError firebaseError) {
-                Log.d("DB", firebaseError.getMessage());
-            }
-        }); */
     }
 
     private void submitAnswer() {

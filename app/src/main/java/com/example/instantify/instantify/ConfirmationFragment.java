@@ -76,7 +76,6 @@ public class ConfirmationFragment extends Fragment {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 if(check){
-                    Log.d("TEST", "TRYING TO PULL FROM STACK");
                     mPullFromStack.pullFromStack();
 
                 } else {
