@@ -4,10 +4,13 @@ import android.content.Context;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.telephony.TelephonyManager;
+import android.util.Log;
 import android.view.View;
 
 import com.example.instantify.instantify.LoginFragment.onShowQuestionListener;
 import com.example.instantify.instantify.QuestionFragment.onShowConfirmListener;
+import com.example.instantify.instantify.ConfirmationFragment.pullFromStackListener;
+
 import com.firebase.client.ChildEventListener;
 import com.firebase.client.DataSnapshot;
 import com.firebase.client.Firebase;
@@ -19,7 +22,8 @@ import java.util.UUID;
 
 public class MainActivity extends AppCompatActivity implements
         onShowQuestionListener,
-        onShowConfirmListener {
+        onShowConfirmListener,
+        pullFromStackListener {
 
     static String deviceId = "";
     static String lectureId = "";
@@ -106,7 +110,7 @@ public class MainActivity extends AppCompatActivity implements
                 .replace(R.id.container, confirmF)
                 .addToBackStack(null)
                 .commit();
-
+        /**
         // Get a reference to our Lecture IDs
         Firebase questionRef = new Firebase("https://instantify.firebaseio.com/" + elementId);
 
@@ -139,6 +143,11 @@ public class MainActivity extends AppCompatActivity implements
             public void onCancelled(FirebaseError firebaseError) {
             }
 
-        });
+        }); */
+    }
+
+    public void pullFromStack() {
+        Log.d("TEST", "PULLING FROM THE STACK!");
+        getSupportFragmentManager().popBackStackImmediate();
     }
 }

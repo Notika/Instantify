@@ -22,6 +22,7 @@ import com.firebase.client.DataSnapshot;
 import com.firebase.client.Firebase;
 import com.firebase.client.FirebaseError;
 import com.firebase.client.Query;
+import com.firebase.client.ValueEventListener;
 
 public class QuestionFragment extends Fragment {
     //TODO: FIX FRAGMENT STACK ORDER.
@@ -141,7 +142,6 @@ public class QuestionFragment extends Fragment {
     @Override
     public void onPause() {
         super.onPause();
-        questionRef.removeEventListener(listener);
     }
 
     @Override
@@ -151,9 +151,42 @@ public class QuestionFragment extends Fragment {
         id = MainActivity.lectureId;
         // // Get a reference to our Lecture IDs
         questionRef = new Firebase("https://instantify.firebaseio.com/" + id);
-        Query queryRef = questionRef.orderByKey();
 
         // Attach an listener to read the data at our IDs reference
+        Firebase activeRef = questionRef.child("active_question");
+        final Firebase answerRef = questionRef.child("answers");
+
+        // Value event listener for active question
+        //This event listener runs once and then everytime there is update
+        activeRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                lectureQuestion.setText(dataSnapshot.getValue().toString());
+
+                // Checking if device id already exist among answers.
+                answerRef.addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+                        if (dataSnapshot.hasChild(MainActivity.deviceId.toString())) {
+                            alreadyAnswered = true;
+                        } else {
+                            alreadyAnswered = false;
+                        }
+                    }
+                    @Override
+                    public void onCancelled(FirebaseError firebaseError) {
+                        //leave empty
+                    }
+                });
+            }
+            @Override
+            public void onCancelled(FirebaseError firebaseError) {
+                Log.d("DB", firebaseError.getMessage());
+            }
+        });
+
+        /**
+        Query queryRef = questionRef.orderByKey();
         listener = queryRef.addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(DataSnapshot snapshot, String previousChildKey) {
@@ -189,7 +222,7 @@ public class QuestionFragment extends Fragment {
             public void onCancelled(FirebaseError firebaseError) {
                 Log.d("DB", firebaseError.getMessage());
             }
-        });
+        }); */
     }
 
     private void submitAnswer() {

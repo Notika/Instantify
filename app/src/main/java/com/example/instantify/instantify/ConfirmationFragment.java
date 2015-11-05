@@ -4,15 +4,26 @@ import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.firebase.client.DataSnapshot;
+import com.firebase.client.Firebase;
+import com.firebase.client.FirebaseError;
+import com.firebase.client.ValueEventListener;
+
 public class ConfirmationFragment extends Fragment {
 
     Activity a;
+    static String id;
+    boolean check = false;
+    pullFromStackListener mPullFromStack;
+    Firebase activeRef;
+    ValueEventListener listener;
 
     public ConfirmationFragment() {
     }
@@ -22,6 +33,7 @@ public class ConfirmationFragment extends Fragment {
         super.onAttach(context);
         try {
             a = (Activity) context;
+            mPullFromStack = (pullFromStackListener) a;
         } catch (ClassCastException e) {
             throw new ClassCastException(a.toString() + " must implement LoginFragment");
         }
@@ -42,9 +54,10 @@ public class ConfirmationFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.confirmation_fragment, container, false);
 
+        id = getArguments().getString("id");
         // Show some text info and Lecture ID for future use
         TextView lectureId = (TextView) view.findViewById(R.id.textView1);
-        lectureId.setText("LECTURE ID: " + getArguments().getString("id"));
+        lectureId.setText("LECTURE ID: " + id);
 
         // Get a reference to Logout button and create onClock listener
         Button logout = (Button) view.findViewById(R.id.logoutB);
@@ -55,6 +68,38 @@ public class ConfirmationFragment extends Fragment {
                 a.finish();
             }
         });
+
+        Firebase idRef = new Firebase("https://instantify.firebaseio.com/" + id);
+        activeRef = idRef.child("active_question");
+        //Listen for new question and pulls QuestionFragment back from stack
+        activeRef.addValueEventListener(listener = new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                if(check){
+                    Log.d("TEST", "TRYING TO PULL FROM STACK");
+                    mPullFromStack.pullFromStack();
+
+                } else {
+                    check = true;
+                }
+            }
+
+            @Override
+            public void onCancelled(FirebaseError firebaseError) {
+                //leave empty
+            }
+        });
+
         return view;
+    }
+
+    @Override
+    public void onPause() {
+        activeRef.removeEventListener(listener);
+        super.onPause();
+    }
+
+    public interface pullFromStackListener {
+        void pullFromStack();
     }
 }
