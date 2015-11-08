@@ -1,4 +1,4 @@
-package com.example.instantify.instantify;
+package com.mah.instantify.instantify;
 
 import android.app.Application;
 import android.test.ApplicationTestCase;

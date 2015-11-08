@@ -1,4 +1,4 @@
-package com.example.instantify.instantify;
+package com.mah.instantify.instantify;
 
 import android.text.Editable;
 import android.text.TextWatcher;

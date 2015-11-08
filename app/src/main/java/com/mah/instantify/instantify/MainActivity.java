@@ -1,4 +1,4 @@
-package com.example.instantify.instantify;
+package com.mah.instantify.instantify;
 
 import android.content.Context;
 import android.support.v7.app.AppCompatActivity;
@@ -6,9 +6,9 @@ import android.os.Bundle;
 import android.telephony.TelephonyManager;
 import android.view.View;
 
-import com.example.instantify.instantify.LoginFragment.onShowQuestionListener;
-import com.example.instantify.instantify.QuestionFragment.onShowConfirmListener;
-import com.example.instantify.instantify.ConfirmationFragment.pullFromStackListener;
+import com.mah.instantify.instantify.LoginFragment.onShowQuestionListener;
+import com.mah.instantify.instantify.QuestionFragment.onShowConfirmListener;
+import com.mah.instantify.instantify.ConfirmationFragment.pullFromStackListener;
 
 import java.util.Random;
 import java.util.UUID;
